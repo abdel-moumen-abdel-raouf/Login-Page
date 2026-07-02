@@ -1,0 +1,6 @@
+{
+  "name": "ERP Login Designer",
+  "description": "A highly polished, responsive ERP login page with real-time interactive layouts, live styling customization, and raw HTML/SCSS code extraction.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
