@@ -13,6 +13,7 @@ export interface LoginConfig {
   requireMFA: boolean;
   companyDomainLogin: boolean;
   customLogoUrl: string;
+  pageType?: 'login' | 'error403' | 'error404' | 'error500' | 'error503';
 }
 
 export type CodeTab = 'html' | 'scss' | 'both';

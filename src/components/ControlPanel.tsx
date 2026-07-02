@@ -65,6 +65,104 @@ export default function ControlPanel({ config, onChange, onReset, onTriggerMockE
       {/* Settings Sections */}
       <div className="p-6 flex-1 space-y-8">
         
+        {/* Section 0: Page Selector */}
+        <div className="space-y-4">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+            <Layout size={14} /> Active Page Template
+          </h3>
+          <div className="grid grid-cols-1 gap-2">
+            <button
+              onClick={() => updateField('pageType', 'login')}
+              className={`w-full text-left p-3 rounded-lg border transition-all cursor-pointer flex items-center justify-between ${
+                (config.pageType || 'login') === 'login'
+                  ? 'bg-slate-800 border-blue-500 text-white'
+                  : 'bg-slate-950 border-slate-800/60 text-slate-300 hover:border-slate-700'
+              }`}
+            >
+              <div className="flex items-center gap-2.5">
+                <span className="text-base">🔐</span>
+                <div>
+                  <div className="font-semibold text-xs">Enterprise Login</div>
+                  <div className="text-[10px] text-slate-400 mt-0.5">Secure authentication portal</div>
+                </div>
+              </div>
+              <span className="text-[10px] text-blue-400 bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-900/30 font-mono">200 OK</span>
+            </button>
+
+            <button
+              onClick={() => updateField('pageType', 'error403')}
+              className={`w-full text-left p-3 rounded-lg border transition-all cursor-pointer flex items-center justify-between ${
+                config.pageType === 'error403'
+                  ? 'bg-slate-800 border-blue-500 text-white'
+                  : 'bg-slate-950 border-slate-800/60 text-slate-300 hover:border-slate-700'
+              }`}
+            >
+              <div className="flex items-center gap-2.5">
+                <span className="text-base">🚫</span>
+                <div>
+                  <div className="font-semibold text-xs">403 Forbidden / Access Denied</div>
+                  <div className="text-[10px] text-slate-400 mt-0.5">IP blockade or missing authorizations</div>
+                </div>
+              </div>
+              <span className="text-[10px] text-amber-400 bg-amber-950/60 px-1.5 py-0.5 rounded border border-amber-900/30 font-mono">403</span>
+            </button>
+
+            <button
+              onClick={() => updateField('pageType', 'error404')}
+              className={`w-full text-left p-3 rounded-lg border transition-all cursor-pointer flex items-center justify-between ${
+                config.pageType === 'error404'
+                  ? 'bg-slate-800 border-blue-500 text-white'
+                  : 'bg-slate-950 border-slate-800/60 text-slate-300 hover:border-slate-700'
+              }`}
+            >
+              <div className="flex items-center gap-2.5">
+                <span className="text-base">🔍</span>
+                <div>
+                  <div className="font-semibold text-xs">404 Page Not Found</div>
+                  <div className="text-[10px] text-slate-400 mt-0.5">Missing ERP system module/endpoint</div>
+                </div>
+              </div>
+              <span className="text-[10px] text-amber-400 bg-amber-950/60 px-1.5 py-0.5 rounded border border-amber-900/30 font-mono">404</span>
+            </button>
+
+            <button
+              onClick={() => updateField('pageType', 'error500')}
+              className={`w-full text-left p-3 rounded-lg border transition-all cursor-pointer flex items-center justify-between ${
+                config.pageType === 'error500'
+                  ? 'bg-slate-800 border-blue-500 text-white'
+                  : 'bg-slate-950 border-slate-800/60 text-slate-300 hover:border-slate-700'
+              }`}
+            >
+              <div className="flex items-center gap-2.5">
+                <span className="text-base">💥</span>
+                <div>
+                  <div className="font-semibold text-xs">500 Internal Error</div>
+                  <div className="text-[10px] text-slate-400 mt-0.5">Uncaught server failure</div>
+                </div>
+              </div>
+              <span className="text-[10px] text-red-400 bg-red-950/60 px-1.5 py-0.5 rounded border border-red-900/30 font-mono">500</span>
+            </button>
+
+            <button
+              onClick={() => updateField('pageType', 'error503')}
+              className={`w-full text-left p-3 rounded-lg border transition-all cursor-pointer flex items-center justify-between ${
+                config.pageType === 'error503'
+                  ? 'bg-slate-800 border-blue-500 text-white'
+                  : 'bg-slate-950 border-slate-800/60 text-slate-300 hover:border-slate-700'
+              }`}
+            >
+              <div className="flex items-center gap-2.5">
+                <span className="text-base">⏳</span>
+                <div>
+                  <div className="font-semibold text-xs">503 Server Down / Maintenance</div>
+                  <div className="text-[10px] text-slate-400 mt-0.5">Offline gateway with auto-refresh/retry</div>
+                </div>
+              </div>
+              <span className="text-[10px] text-red-400 bg-red-950/60 px-1.5 py-0.5 rounded border border-red-900/30 font-mono">503</span>
+            </button>
+          </div>
+        </div>
+
         {/* Section 1: Brand Configuration */}
         <div className="space-y-4">
           <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">

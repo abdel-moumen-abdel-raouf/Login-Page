@@ -27,7 +27,8 @@ const DEFAULT_CONFIG: LoginConfig = {
   showRememberMe: true,
   requireMFA: false,
   companyDomainLogin: false,
-  customLogoUrl: ''
+  customLogoUrl: '',
+  pageType: 'login'
 };
 
 // Referencing the generated image from our image generation step
@@ -128,6 +129,7 @@ export default function App() {
           heroImageUrl={HERO_IMAGE_URL} 
           mockError={mockError}
           onClearError={handleClearError}
+          onChange={setConfig}
         />
       </main>
 

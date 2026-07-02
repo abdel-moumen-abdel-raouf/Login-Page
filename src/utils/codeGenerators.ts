@@ -19,6 +19,7 @@ export function generateHTML(config: LoginConfig, heroImageUrl: string = ''): st
     showRememberMe,
     requireMFA,
     companyDomainLogin,
+    pageType = 'login'
   } = config;
 
   const isSplit = layoutStyle === 'split';
@@ -31,27 +32,17 @@ export function generateHTML(config: LoginConfig, heroImageUrl: string = ''): st
   const mailIcon = `<svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>`;
   const domainIcon = `<svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="0" ry="0"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>`;
 
-  return `<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تسجيل الدخول | ${brandName} ERP</title>
-  <!-- Google Fonts: Inter & Cairo for Arabic -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="style.css">
-</head>
-<body class="erp-login-body ${isGlass ? 'glassmorphic-bg' : ''}">
+  let pageTitle = 'تسجيل الدخول';
+  if (pageType === 'error403') pageTitle = 'غير مصرح بالدخول | 403';
+  if (pageType === 'error404') pageTitle = 'الصفحة غير موجودة | 404';
+  if (pageType === 'error500') pageTitle = 'خلل داخلي في الخادم | 500';
+  if (pageType === 'error503') pageTitle = 'الخدمة غير متوفرة حالياً | 503';
 
-  <main id="erp-login-wrapper" class="layout-${layoutStyle}">
-    
-    <!-- Form Side -->
-    <section id="erp-login-form-container">
-      <div id="erp-login-card">
-        
+  let cardContent = '';
+  let scriptContent = '';
+
+  if (pageType === 'login') {
+    cardContent = `
         <!-- Header / Branding (Geometric Balance Style) -->
         <header id="erp-login-header">
           <div id="erp-login-brand">
@@ -66,8 +57,6 @@ export function generateHTML(config: LoginConfig, heroImageUrl: string = ''): st
           <h1 id="erp-login-title">مرحباً بك مجدداً</h1>
           <p id="erp-login-subtitle">${brandTagline || 'أدخل بيانات الاعتماد الخاصة بك للوصول إلى بوابة المؤسسة.'}</p>
         </header>
-
-
 
         <!-- Login Form -->
         <form id="erp-login-form" action="#" method="POST" autocomplete="on">
@@ -177,7 +166,278 @@ export function generateHTML(config: LoginConfig, heroImageUrl: string = ''): st
         <footer id="erp-login-footer">
           <p class="footer-text">ليس لديك حساب مؤسسي؟ <a id="link-signup" href="#" class="form-link font-medium text-bold">اتصل بمسؤول الدعم الفني</a></p>
         </footer>` : ''}
+    `;
 
+    scriptContent = `
+      const form = document.getElementById('erp-login-form');
+      const submitBtn = document.getElementById('btn-submit');
+      const passwordInput = document.getElementById('input-password');
+      const passwordToggle = document.getElementById('btn-toggle-password');
+
+      if (passwordToggle && passwordInput) {
+        passwordToggle.addEventListener('click', () => {
+          const isPassword = passwordInput.type === 'password';
+          passwordInput.type = isPassword ? 'text' : 'password';
+        });
+      }
+
+      if (form && submitBtn) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const originalText = submitBtn.textContent;
+          submitBtn.disabled = true;
+          submitBtn.classList.add('loading');
+          submitBtn.textContent = 'جاري التحقق من معايير الأمان...';
+
+          setTimeout(() => {
+            submitBtn.textContent = 'مزامنة وحدات النظام...';
+            setTimeout(() => {
+              submitBtn.classList.remove('loading');
+              submitBtn.classList.add('success');
+              submitBtn.textContent = 'تم الاتصال بنجاح';
+              alert('محاكاة تسجيل الدخول نجحت! تم تسليم النموذج بأمان لمسؤولي النظام.');
+              submitBtn.disabled = false;
+              submitBtn.textContent = originalText;
+              submitBtn.classList.remove('success');
+            }, 1200);
+          }, 1000);
+        });
+      }
+    `;
+  } else if (pageType === 'error403') {
+    cardContent = `
+        <header id="erp-login-header">
+          <div id="erp-login-brand">
+            <div class="brand-logo-grid">
+              <div class="logo-square-1"></div>
+              <div class="logo-square-2"></div>
+              <div class="logo-square-3"></div>
+              <div class="logo-square-4"></div>
+            </div>
+            <span class="brand-name">${brandName.toUpperCase()}</span>
+          </div>
+        </header>
+
+        <div class="system-error-view">
+          <div class="alert-block alert-warning">
+            <span class="alert-icon">🚫</span>
+            <div>
+              <h4 class="alert-heading">خطأ 403: غير مسموح بالدخول</h4>
+              <p class="alert-subheading">Access Forbidden / Blocked</p>
+            </div>
+          </div>
+
+          <h2 class="error-title">تم حظر الوصول إلى هذه البوابة</h2>
+          <p class="error-desc">
+            لقد تم رفض طلب الاتصال الخاص بك بناءً على سياسات جدار الحماية والأمن السيبراني لشركة <strong>${brandName}</strong>. عنوان IP الخاص بك غير مدرج في القائمة البيضاء أو تم حظره لدواعي أمنية.
+          </p>
+
+          <div class="code-log-box">
+            <div>SENDER_IP: 197.34.112.90</div>
+            <div>REASON: ACCESS_CONTROL_VIOLATION</div>
+            <div>NODE: GATEWAY_EMEA_01</div>
+          </div>
+
+          <div class="error-actions">
+            <button onclick="window.location.reload()" class="btn-primary" style="width: 100%;">إعادة محاولة الاتصال</button>
+            <button onclick="alert('تم تقديم طلب الفك لمراجعة الأمان.')" class="btn-secondary" style="width: 100%; margin-top: 10px;">طلب فك الحظر الفني</button>
+          </div>
+        </div>
+    `;
+  } else if (pageType === 'error404') {
+    cardContent = `
+        <header id="erp-login-header">
+          <div id="erp-login-brand">
+            <div class="brand-logo-grid">
+              <div class="logo-square-1"></div>
+              <div class="logo-square-2"></div>
+              <div class="logo-square-3"></div>
+              <div class="logo-square-4"></div>
+            </div>
+            <span class="brand-name">${brandName.toUpperCase()}</span>
+          </div>
+        </header>
+
+        <div class="system-error-view">
+          <div class="alert-block alert-neutral">
+            <span class="alert-icon">🔍</span>
+            <div>
+              <h4 class="alert-heading">خطأ 404: الصفحة غير موجودة</h4>
+              <p class="alert-subheading">ERP Module Not Found</p>
+            </div>
+          </div>
+
+          <h2 class="error-title">لم نتمكن من العثور على هذا القسم</h2>
+          <p class="error-desc">
+            عذراً، يبدو أنك تحاول الوصول إلى وحدة نظام ERP غير مفعلة في اشتراكك الحالي أو تم نقل ملف المصادقة الخاص بها لمسار آخر على خوادم شركة <strong>${brandName}</strong>.
+          </p>
+
+          <div class="code-log-box">
+            <div>REQUEST_URI: /modules/admin/dashboard.jsp</div>
+            <div>ERROR_CODE: ERR_FILE_NOT_FOUND</div>
+          </div>
+
+          <div class="error-actions">
+            <button onclick="alert('جاري التوجيه للرئيسية...')" class="btn-primary" style="width: 100%;">العودة للرئيسية والتسجيل</button>
+          </div>
+        </div>
+    `;
+  } else if (pageType === 'error500') {
+    cardContent = `
+        <header id="erp-login-header">
+          <div id="erp-login-brand">
+            <div class="brand-logo-grid">
+              <div class="logo-square-1"></div>
+              <div class="logo-square-2"></div>
+              <div class="logo-square-3"></div>
+              <div class="logo-square-4"></div>
+            </div>
+            <span class="brand-name">${brandName.toUpperCase()}</span>
+          </div>
+        </header>
+
+        <div class="system-error-view">
+          <div class="alert-block alert-danger">
+            <span class="alert-icon">💥</span>
+            <div>
+              <h4 class="alert-heading">خطأ 500: خلل داخلي</h4>
+              <p class="alert-subheading">Internal Database Server Error</p>
+            </div>
+          </div>
+
+          <h2 class="error-title">فشل غير متوقع في جلب البيانات</h2>
+          <p class="error-desc">
+            حدث خطأ غير متوقع في قاعدة البيانات الرئيسية لنظام <strong>${brandName}</strong> أثناء معالجة استعلام المصادقة. تم إرسال تنبيه بالحدث تلقائياً لمهندسي الدعم الفني.
+          </p>
+
+          <div class="code-log-box">
+            <div>EXCEPTION: NullPointerException</div>
+            <div>SOURCE: database_pool_connector.rs:240</div>
+            <div>STATUS: SQL_DATABASE_UNREACHABLE</div>
+          </div>
+
+          <div class="error-actions">
+            <button onclick="window.location.reload()" class="btn-primary" style="width: 100%;">إعادة المحاولة وتحديث الصفحة</button>
+          </div>
+        </div>
+    `;
+  } else if (pageType === 'error503') {
+    cardContent = `
+        <header id="erp-login-header">
+          <div id="erp-login-brand">
+            <div class="brand-logo-grid">
+              <div class="logo-square-1"></div>
+              <div class="logo-square-2"></div>
+              <div class="logo-square-3"></div>
+              <div class="logo-square-4"></div>
+            </div>
+            <span class="brand-name">${brandName.toUpperCase()}</span>
+          </div>
+        </header>
+
+        <div class="system-error-view">
+          <div class="alert-block alert-info">
+            <span class="alert-icon">⏳</span>
+            <div>
+              <h4 class="alert-heading">خطأ 503: الخدمة غير متوفرة</h4>
+              <p class="alert-subheading">Service Temporarily Offline</p>
+            </div>
+          </div>
+
+          <h2 class="error-title">بوابة المزامنة تحت الصيانة الدورية</h2>
+          <p class="error-desc">
+            الخوادم التابعة لنظام <strong>${brandName}</strong> متوقفة مؤقتاً لتثبيت التحديثات الأمنية المقررة. سيقوم النظام بمحاولة إعادة الاتصال التلقائي بالبوابة فور اكتمال أعمال الترقية.
+          </p>
+
+          <div class="countdown-card">
+            <div class="countdown-header">
+              <span class="pulsing-dot"></span>
+              <span id="countdown-text">إعادة محاولة الاتصال التلقائي خلال <span id="timer-val">15</span> ثانية...</span>
+            </div>
+            <div class="progress-track">
+              <div id="progress-bar" class="progress-fill" style="width: 100%"></div>
+            </div>
+          </div>
+
+          <div class="error-actions">
+            <button id="btn-retry-now" class="btn-primary" style="width: 100%;">حاول الاتصال الفوري الآن</button>
+          </div>
+        </div>
+    `;
+
+    scriptContent = `
+      const timerVal = document.getElementById('timer-val');
+      const progressBar = document.getElementById('progress-bar');
+      const retryBtn = document.getElementById('btn-retry-now');
+      const countdownText = document.getElementById('countdown-text');
+
+      if (timerVal && progressBar) {
+        let timeLeft = 15;
+        let isRetrying = false;
+
+        const updateTimer = () => {
+          if (isRetrying) return;
+          if (timeLeft <= 0) {
+            triggerRetry();
+            return;
+          }
+          timeLeft--;
+          timerVal.textContent = timeLeft;
+          progressBar.style.width = (timeLeft / 15 * 100) + '%';
+        };
+
+        let timerInterval = setInterval(updateTimer, 1000);
+
+        const triggerRetry = () => {
+          if (isRetrying) return;
+          isRetrying = true;
+          countdownText.innerHTML = 'جاري محاولة إعادة الاتصال بالبوابة...';
+          progressBar.style.width = '100%';
+          progressBar.classList.add('loading-pulse');
+          if (retryBtn) retryBtn.disabled = true;
+
+          setTimeout(() => {
+            isRetrying = false;
+            timeLeft = 15;
+            timerVal.textContent = timeLeft;
+            countdownText.innerHTML = 'إعادة محاولة الاتصال التلقائي خلال <span id="timer-val">15</span> ثانية...';
+            progressBar.classList.remove('loading-pulse');
+            progressBar.style.width = '100%';
+            if (retryBtn) retryBtn.disabled = false;
+            alert('فشلت محاولة الاتصال التلقائي بالخادم الرئيسي (خطأ 503). سيعيد النظام المحاولة مجدداً بعد انتهاء العداد.');
+          }, 2000);
+        };
+
+        if (retryBtn) {
+          retryBtn.addEventListener('click', () => {
+            triggerRetry();
+          });
+        }
+      }
+    `;
+  }
+
+  return `<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${pageTitle} | ${brandName} ERP</title>
+  <!-- Google Fonts: Inter & Cairo for Arabic -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="erp-login-body ${isGlass ? 'glassmorphic-bg' : ''}">
+
+  <main id="erp-login-wrapper" class="layout-${layoutStyle}">
+    
+    <!-- Form Side -->
+    <section id="erp-login-form-container">
+      <div id="erp-login-card">
+        ${cardContent}
       </div>
     </section>
 
@@ -222,42 +482,7 @@ export function generateHTML(config: LoginConfig, heroImageUrl: string = ''): st
   <!-- Interactive Demo Script -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const form = document.getElementById('erp-login-form');
-      const submitBtn = document.getElementById('btn-submit');
-      const passwordInput = document.getElementById('input-password');
-      const passwordToggle = document.getElementById('btn-toggle-password');
-
-      // Password toggle interaction
-      if (passwordToggle && passwordInput) {
-        passwordToggle.addEventListener('click', () => {
-          const isPassword = passwordInput.type === 'password';
-          passwordInput.type = isPassword ? 'text' : 'password';
-        });
-      }
-
-      // Demo login submit interaction
-      if (form && submitBtn) {
-        form.addEventListener('submit', (e) => {
-          e.preventDefault();
-          const originalText = submitBtn.textContent;
-          submitBtn.disabled = true;
-          submitBtn.classList.add('loading');
-          submitBtn.textContent = 'جاري التحقق من معايير الأمان...';
-
-          setTimeout(() => {
-            submitBtn.textContent = 'مزامنة وحدات النظام...';
-            setTimeout(() => {
-              submitBtn.classList.remove('loading');
-              submitBtn.classList.add('success');
-              submitBtn.textContent = 'تم الاتصال بنجاح';
-              alert('محاكاة تسجيل الدخول نجحت! تم تسليم النموذج بأمان لمسؤولي النظام.');
-              submitBtn.disabled = false;
-              submitBtn.textContent = originalText;
-              submitBtn.classList.remove('success');
-            }, 1200);
-          }, 1000);
-        });
-      }
+      ${scriptContent}
     });
   </script>
 </body>
@@ -908,6 +1133,179 @@ body.erp-login-body {
     text-transform: uppercase;
     letter-spacing: 0.1em;
   }
+}
+
+// --- SYSTEM ERROR STYLES ---
+.system-error-view {
+  text-align: right;
+  margin-top: 1.5rem;
+
+  .alert-block {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    text-align: right;
+
+    &.alert-warning {
+      background-color: #fef3c7;
+      border: 1px solid #fde68a;
+      .alert-heading { color: #92400e; }
+      .alert-subheading { color: #b45309; }
+    }
+
+    &.alert-neutral {
+      background-color: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      .alert-heading { color: #334155; }
+      .alert-subheading { color: #475569; }
+    }
+
+    &.alert-danger {
+      background-color: #fee2e2;
+      border: 1px solid #fecaca;
+      .alert-heading { color: #991b1b; }
+      .alert-subheading { color: #b91c1c; }
+    }
+
+    &.alert-info {
+      background-color: #eff6ff;
+      border: 1px solid #bfdbfe;
+      .alert-heading { color: #1e40af; }
+      .alert-subheading { color: #1d4ed8; }
+    }
+
+    .alert-icon {
+      font-size: 1.75rem;
+    }
+
+    .alert-heading {
+      font-size: 0.875rem;
+      font-weight: 700;
+      margin: 0 0 2px 0;
+    }
+
+    .alert-subheading {
+      font-size: 0.75rem;
+      margin: 0;
+      font-family: monospace;
+    }
+  }
+
+  .error-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: $color-text-dark;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .error-desc {
+    font-size: 0.875rem;
+    color: $color-text-muted;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .code-log-box {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    background-color: #0f172a;
+    color: #38bdf8;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    direction: ltr;
+    text-align: left;
+    line-height: 1.5;
+
+    div {
+      margin-bottom: 2px;
+      &:last-child { margin-bottom: 0; }
+    }
+  }
+
+  .error-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    .btn-secondary {
+      width: 100%;
+      background: transparent;
+      border: 1px solid $color-border;
+      color: $color-text-dark;
+      padding: 0.875rem;
+      font-weight: 700;
+      font-size: 0.8125rem;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background-color: #f1f5f9;
+        border-color: $color-border-focus;
+      }
+    }
+  }
+
+  .countdown-card {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 1.25rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+
+    .countdown-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: $color-text-dark;
+      margin-bottom: 0.75rem;
+
+      .pulsing-dot {
+        width: 8px;
+        height: 8px;
+        background-color: $color-primary;
+        border-radius: 50%;
+        animation: pulse-dot 1.5s infinite;
+      }
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 6px;
+      background-color: #e2e8f0;
+      border-radius: 3px;
+      overflow: hidden;
+
+      .progress-fill {
+        height: 100%;
+        background-color: $color-primary;
+        transition: width 0.3s linear;
+
+        &.loading-pulse {
+          animation: bar-pulse 1s infinite alternate;
+        }
+      }
+    }
+  }
+}
+
+@keyframes pulse-dot {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  50% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.6; }
+}
+
+@keyframes bar-pulse {
+  from { opacity: 0.6; }
+  to { opacity: 1; }
 }
 `;
 }
