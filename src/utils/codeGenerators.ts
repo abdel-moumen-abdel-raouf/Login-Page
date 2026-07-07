@@ -417,6 +417,389 @@ export function generateHTML(config: LoginConfig, heroImageUrl: string = ''): st
     `;
   }
 
+  if (pageType !== 'login') {
+    let bigSvg = '';
+    let errorDetails = '';
+
+    if (pageType === 'error403') {
+      bigSvg = `
+                    <svg class="error-illustration" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <radialGradient id="grad-403" cx="50%" cy="50%" r="50%">
+                          <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.25"/>
+                          <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
+                        </radialGradient>
+                        <linearGradient id="shield-grad" x1="50" y1="30" x2="150" y2="170" gradientUnits="userSpaceOnUse">
+                          <stop offset="0%" stop-color="#fbbf24"/>
+                          <stop offset="50%" stop-color="#f59e0b"/>
+                          <stop offset="100%" stop-color="#d97706"/>
+                        </linearGradient>
+                        <linearGradient id="lock-body-grad" x1="70" y1="85" x2="130" y2="155" gradientUnits="userSpaceOnUse">
+                          <stop offset="0%" stop-color="#1e293b"/>
+                          <stop offset="100%" stop-color="#0f172a"/>
+                        </linearGradient>
+                      </defs>
+                      <circle cx="100" cy="100" r="85" fill="url(#grad-403)"/>
+                      <circle cx="100" cy="100" r="75" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3 6" opacity="0.4" class="animate-spin-slow"/>
+                      <circle cx="100" cy="100" r="55" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="20 4" opacity="0.3"/>
+                      <path d="M100 25 L165 62 L165 138 L100 175 L35 138 L35 62 Z" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4 8" opacity="0.25" />
+                      <line x1="100" y1="10" x2="100" y2="190" stroke="#f59e0b" stroke-width="0.5" stroke-dasharray="5 5" opacity="0.15" />
+                      <line x1="10" y1="100" x2="190" y2="100" stroke="#f59e0b" stroke-width="0.5" stroke-dasharray="5 5" opacity="0.15" />
+                      <path d="M75 100 V75 C75 61.2 86.2 50 100 50 C113.8 50 125 61.2 125 75 V100" stroke="url(#shield-grad)" stroke-width="8" stroke-linecap="round" opacity="0.9"/>
+                      <path d="M85 100 V75 C85 66.7 91.7 60 100 60 C108.3 60 115 66.7 115 75 V100" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+                      <rect x="60" y="92" width="80" height="65" rx="12" fill="url(#lock-body-grad)" stroke="#0f172a" stroke-width="3"/>
+                      <rect x="64" y="96" width="72" height="57" rx="9" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.8"/>
+                      <circle cx="100" cy="120" r="16" fill="#0f172a" stroke="#f59e0b" stroke-width="2" class="animate-pulse" />
+                      <path d="M100 110 V124" stroke="#ef4444" stroke-width="4" stroke-linecap="round"/>
+                      <circle cx="100" cy="131" r="2.5" fill="#ef4444"/>
+                      <circle cx="60" cy="92" r="3" fill="#f59e0b"/>
+                      <circle cx="140" cy="92" r="3" fill="#f59e0b"/>
+                      <circle cx="60" cy="157" r="3" fill="#f59e0b" opacity="0.6"/>
+                      <circle cx="140" cy="157" r="3" fill="#f59e0b" opacity="0.6"/>
+                      <path d="M45 80 L35 90 M35 80 L45 90" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
+                      <path d="M165 80 L155 90 M155 80 L165 90" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
+                    </svg>
+      `;
+      errorDetails = `
+        <div class="system-error-view">
+          <div class="alert-block alert-warning">
+            <span class="alert-icon">🚫</span>
+            <div>
+              <h4 class="alert-heading">خطأ 403: غير مسموح بالدخول</h4>
+              <p class="alert-subheading">Access Forbidden / Blocked</p>
+            </div>
+          </div>
+
+          <h2 class="error-title">تم حظر الوصول إلى هذه البوابة</h2>
+          <p class="error-desc">
+            لقد تم رفض طلب الاتصال الخاص بك بناءً على سياسات جدار الحماية والأمن السيبراني لشركة <strong>${brandName}</strong>. عنوان IP الخاص بك غير مدرج في القائمة البيضاء أو تم حظره لدواعي أمنية.
+          </p>
+
+          <div class="code-log-box">
+            <div>SENDER_IP: 197.34.112.90</div>
+            <div>REASON: ACCESS_CONTROL_VIOLATION</div>
+            <div>NODE: GATEWAY_EMEA_01</div>
+          </div>
+
+          <div class="error-actions">
+            <button onclick="window.location.href='login.html'" class="btn-primary" style="width: 100%;">العودة لبوابة تسجيل الدخول</button>
+            <button onclick="alert('تم تقديم طلب فك الحظر الفني.')" class="btn-secondary" style="width: 100%; margin-top: 10px;">طلب فك الحظر الفني</button>
+          </div>
+        </div>
+      `;
+    } else if (pageType === 'error404') {
+      bigSvg = `
+                    <svg class="error-illustration animate-float" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <radialGradient id="grad-404" cx="50%" cy="50%" r="50%">
+                          <stop offset="0%" stop-color="#6366f1" stop-opacity="0.25"/>
+                          <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+                        </radialGradient>
+                        <linearGradient id="folder-grad" x1="45" y1="65" x2="135" y2="155" gradientUnits="userSpaceOnUse">
+                          <stop offset="0%" stop-color="#818cf8"/>
+                          <stop offset="100%" stop-color="#4f46e5"/>
+                        </linearGradient>
+                        <linearGradient id="glass-lens-grad" x1="120" y1="100" x2="170" y2="150" gradientUnits="userSpaceOnUse">
+                          <stop offset="0%" stop-color="#ffffff" stop-opacity="0.4"/>
+                          <stop offset="100%" stop-color="#cbd5e1" stop-opacity="0.05"/>
+                        </linearGradient>
+                      </defs>
+                      <circle cx="100" cy="100" r="85" fill="url(#grad-404)"/>
+                      <g opacity="0.2">
+                        <path d="M20 120 L100 160 L180 120 L100 80 Z" stroke="#6366f1" stroke-width="1" />
+                        <path d="M40 110 L100 140 L160 110 L100 80 Z" stroke="#6366f1" stroke-width="1" />
+                        <path d="M60 100 L100 120 L140 100 L100 80 Z" stroke="#6366f1" stroke-width="1" />
+                        <line x1="100" y1="80" x2="100" y2="160" stroke="#6366f1" stroke-width="1" />
+                        <line x1="20" y1="120" x2="180" y2="120" stroke="#6366f1" stroke-width="1" />
+                      </g>
+                      <circle cx="100" cy="100" r="65" stroke="#6366f1" stroke-width="1" stroke-dasharray="4 12" opacity="0.3" class="animate-spin-slow"/>
+                      <circle cx="100" cy="100" r="45" stroke="#818cf8" stroke-width="0.75" stroke-dasharray="2 6" opacity="0.4"/>
+                      <g transform="translate(10, -5)">
+                        <path d="M55 135 L95 150 L135 135 L95 120 Z" fill="#0f172a" opacity="0.1" />
+                        <path d="M50 75 L90 55 L135 72 V125 L95 142 L50 122 Z" fill="url(#folder-grad)" stroke="#4338ca" stroke-width="2" stroke-linejoin="round"/>
+                        <path d="M62 58 L94 42 L127 55 V108 L94 124 L62 108 Z" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" stroke-linejoin="round" />
+                        <line x1="75" y1="68" x2="102" y2="56" stroke="#cbd5e1" stroke-width="2.5" stroke-linecap="round"/>
+                        <line x1="75" y1="78" x2="114" y2="61" stroke="#cbd5e1" stroke-width="2.5" stroke-linecap="round"/>
+                        <line x1="75" y1="88" x2="108" y2="74" stroke="#cbd5e1" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M50 88 L95 106 L135 88 V125 L95 142 L50 122 Z" fill="#4f46e5" stroke="#3730a3" stroke-width="2" stroke-linejoin="round" opacity="0.95"/>
+                        <path d="M85 110 L95 105 L105 110 L105 122 L95 127 L85 122 Z" fill="#f43f5e" stroke="#ffffff" stroke-width="1.2" />
+                        <text x="95" y="120" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="sans-serif">?</text>
+                      </g>
+                      <g class="animate-pulse" style="transform-origin: 140px 125px;">
+                        <line x1="148" y1="133" x2="175" y2="160" stroke="#1e293b" stroke-width="6" stroke-linecap="round" />
+                        <line x1="148" y1="133" x2="175" y2="160" stroke="#64748b" stroke-width="2.5" stroke-linecap="round" />
+                        <circle cx="128" cy="113" r="24" fill="url(#glass-lens-grad)" stroke="#1e293b" stroke-width="3.5" />
+                        <circle cx="128" cy="113" r="22" fill="none" stroke="#6366f1" stroke-width="1" opacity="0.6" />
+                        <path d="M114 105 A 16 16 0 0 1 138 97" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+                      </g>
+                    </svg>
+      `;
+      errorDetails = `
+        <div class="system-error-view">
+          <div class="alert-block alert-neutral">
+            <span class="alert-icon">🔍</span>
+            <div>
+              <h4 class="alert-heading">خطأ 404: الصفحة غير موجودة</h4>
+              <p class="alert-subheading">ERP Module Not Found</p>
+            </div>
+          </div>
+
+          <h2 class="error-title">لم نتمكن من العثور على هذا القسم</h2>
+          <p class="error-desc">
+            عذراً، يبدو أنك تحاول الوصول إلى وحدة نظام ERP غير مفعلة في اشتراكك الحالي أو تم نقل ملف المصادقة الخاص بها لمسار آخر على خوادم شركة <strong>${brandName}</strong>.
+          </p>
+
+          <div class="code-log-box">
+            <div>REQUEST_URI: /modules/admin/dashboard.jsp</div>
+            <div>ERROR_CODE: ERR_FILE_NOT_FOUND</div>
+            <div>MODULE: ADMIN_CORE_STATION</div>
+          </div>
+
+          <div class="error-actions">
+            <button onclick="window.location.href='login.html'" class="btn-primary" style="width: 100%;">الذهاب للرئيسية والتسجيل</button>
+          </div>
+        </div>
+      `;
+    } else if (pageType === 'error500') {
+      bigSvg = `
+                    <svg class="error-illustration" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <radialGradient id="grad-500" cx="50%" cy="50%" r="50%">
+                          <stop offset="0%" stop-color="#ef4444" stop-opacity="0.2"/>
+                          <stop offset="100%" stop-color="#ef4444" stop-opacity="0"/>
+                        </radialGradient>
+                        <linearGradient id="server-body-grad" x1="40" y1="35" x2="160" y2="165" gradientUnits="userSpaceOnUse">
+                          <stop offset="0%" stop-color="#1e293b"/>
+                          <stop offset="100%" stop-color="#0f172a"/>
+                        </linearGradient>
+                        <linearGradient id="error-glow" x1="70" y1="80" x2="130" y2="110" gradientUnits="userSpaceOnUse">
+                          <stop offset="0%" stop-color="#f43f5e"/>
+                          <stop offset="100%" stop-color="#be123c"/>
+                        </linearGradient>
+                      </defs>
+                      <circle cx="100" cy="100" r="85" fill="url(#grad-500)"/>
+                      <circle cx="100" cy="100" r="78" stroke="#ef4444" stroke-width="0.75" stroke-dasharray="8 8" opacity="0.2" class="animate-spin-slow"/>
+                      <circle cx="100" cy="100" r="65" stroke="#ef4444" stroke-width="0.5" stroke-dasharray="2 4" opacity="0.15"/>
+                      <g opacity="0.15">
+                        <line x1="50" y1="20" x2="50" y2="180" stroke="#ef4444" stroke-width="1" stroke-dasharray="3 6"/>
+                        <line x1="150" y1="20" x2="150" y2="180" stroke="#ef4444" stroke-width="1" stroke-dasharray="3 6"/>
+                        <path d="M40 40 L60 40 M140 40 L160 40 M40 160 L60 160 M140 160 L160 160" stroke="#ef4444" stroke-width="1"/>
+                      </g>
+                      <rect x="55" y="30" width="90" height="140" rx="8" fill="url(#server-body-grad)" stroke="#0f172a" stroke-width="3.5" />
+                      <rect x="61" y="36" width="78" height="128" rx="5" fill="none" stroke="#475569" stroke-width="1" opacity="0.6" />
+                      <g transform="translate(64, 42)">
+                        <rect x="0" y="0" width="72" height="24" rx="3" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+                        <circle cx="8" cy="12" r="2.5" fill="#10b981" />
+                        <circle cx="16" cy="12" r="1.5" fill="#10b981" opacity="0.6" />
+                        <line x1="28" y1="12" x2="58" y2="12" stroke="#1e293b" stroke-width="2.5" stroke-dasharray="3 2" />
+                      </g>
+                      <g transform="translate(64, 76)">
+                        <rect x="0" y="0" width="72" height="36" rx="4" fill="url(#error-glow)" stroke="#f43f5e" stroke-width="2" class="animate-pulse" />
+                        <circle cx="8" cy="12" r="3" fill="#ffffff" class="animate-pulse" />
+                        <circle cx="8" cy="24" r="2.5" fill="#991b1b" />
+                        <line x1="22" y1="12" x2="62" y2="12" stroke="#ffffff" stroke-width="2" stroke-dasharray="4 2" opacity="0.8"/>
+                        <line x1="22" y1="24" x2="62" y2="24" stroke="#7f1d1d" stroke-width="2" />
+                        <path d="M-8 6 L-2 14 M-14 22 L-4 18 M80 14 L74 24" stroke="#f43f5e" stroke-width="1.5" stroke-linecap="round" class="animate-float" />
+                      </g>
+                      <g transform="translate(64, 122)">
+                        <rect x="0" y="0" width="72" height="24" rx="3" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+                        <circle cx="8" cy="12" r="2.5" fill="#10b981" />
+                        <circle cx="16" cy="12" r="1.5" fill="#10b981" opacity="0.6" />
+                        <line x1="28" y1="12" x2="58" y2="12" stroke="#1e293b" stroke-width="2.5" stroke-dasharray="3 2" />
+                      </g>
+                      <g opacity="0.8">
+                        <path d="M25 80 L50 95 L64 95" fill="none" stroke="#f43f5e" stroke-width="1.5" stroke-linecap="round" />
+                        <circle cx="25" cy="80" r="3" fill="#f43f5e" />
+                        <path d="M175 110 L150 95 L136 95" fill="none" stroke="#f43f5e" stroke-width="1.5" stroke-linecap="round" />
+                        <circle cx="175" cy="110" r="3" fill="#f43f5e" />
+                      </g>
+                      <path d="M22 135 L12 155 H28 L18 175" stroke="#ef4444" stroke-width="2" stroke-linejoin="round" class="animate-pulse" />
+                      <path d="M178 35 L168 55 H184 L174 75" stroke="#ef4444" stroke-width="2" stroke-linejoin="round" class="animate-pulse" />
+                    </svg>
+      `;
+      errorDetails = `
+        <div class="system-error-view">
+          <div class="alert-block alert-danger">
+            <span class="alert-icon">💥</span>
+            <div>
+              <h4 class="alert-heading">خطأ 500: خلل داخلي</h4>
+              <p class="alert-subheading">Internal Database Server Error</p>
+            </div>
+          </div>
+
+          <h2 class="error-title">فشل غير متوقع في جلب البيانات</h2>
+          <p class="error-desc">
+            حدث خطأ غير متوقع في قاعدة البيانات الرئيسية لنظام <strong>${brandName}</strong> أثناء معالجة استعلام المصادقة. تم إرسال تنبيه بالحدث تلقائياً لمهندسي الدعم الفني.
+          </p>
+
+          <div class="code-log-box">
+            <div>EXCEPTION: NullPointerException</div>
+            <div>SOURCE: database_pool_connector.rs:240</div>
+            <div>STATUS: SQL_DATABASE_UNREACHABLE</div>
+          </div>
+
+          <div class="error-actions">
+            <button onclick="window.location.reload()" class="btn-primary" style="width: 100%;">تحديث الصفحة والمحاولة</button>
+            <button onclick="window.location.href='login.html'" class="btn-secondary" style="width: 100%; margin-top: 10px;">بوابة الدخول البديلة</button>
+          </div>
+        </div>
+      `;
+    } else if (pageType === 'error503') {
+      bigSvg = `
+                    <svg class="error-illustration" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <radialGradient id="grad-503" cx="50%" cy="50%" r="50%">
+                          <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.25"/>
+                          <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+                        </radialGradient>
+                        <linearGradient id="gear-blue" x1="45" y1="45" x2="115" y2="115" gradientUnits="userSpaceOnUse">
+                          <stop offset="0%" stop-color="#60a5fa"/>
+                          <stop offset="100%" stop-color="#2563eb"/>
+                        </linearGradient>
+                        <linearGradient id="gear-gray" x1="100" y1="100" x2="150" y2="150" gradientUnits="userSpaceOnUse">
+                          <stop offset="0%" stop-color="#cbd5e1"/>
+                          <stop offset="100%" stop-color="#64748b"/>
+                        </linearGradient>
+                      </defs>
+                      <circle cx="100" cy="100" r="85" fill="url(#grad-503)"/>
+                      <circle cx="100" cy="100" r="82" stroke="#3b82f6" stroke-width="0.5" stroke-dasharray="1 5" opacity="0.3"/>
+                      <circle cx="100" cy="100" r="74" stroke="#3b82f6" stroke-width="1" stroke-dasharray="10 4 2 4" opacity="0.2" class="animate-spin-slow"/>
+                      <circle cx="100" cy="100" r="50" stroke="#cbd5e1" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.3"/>
+                      <line x1="100" y1="10" x2="100" y2="190" stroke="#3b82f6" stroke-width="0.5" stroke-dasharray="6 6" opacity="0.2" />
+                      <line x1="10" y1="100" x2="190" y2="100" stroke="#3b82f6" stroke-width="0.5" stroke-dasharray="6 6" opacity="0.2" />
+                      <path d="M100 26 A74 74 0 0 1 174 100" stroke="#3b82f6" stroke-width="3.5" stroke-linecap="round" opacity="0.8" />
+                      <path d="M100 174 A74 74 0 0 1 26 100" stroke="#93c5fd" stroke-width="2" stroke-linecap="round" stroke-dasharray="5 5" opacity="0.6"/>
+                      <g class="animate-spin-slow" style="transform-origin: 85px 85px;">
+                        <circle cx="85" cy="85" r="30" fill="none" stroke="url(#gear-blue)" stroke-width="8"/>
+                        <g stroke="url(#gear-blue)" stroke-width="8" stroke-linecap="round">
+                          <line x1="85" y1="47" x2="85" y2="53" />
+                          <line x1="85" y1="117" x2="85" y2="123" />
+                          <line x1="47" y1="85" x2="53" y2="85" />
+                          <line x1="117" y1="85" x2="123" y2="85" />
+                          <line x1="58" y1="58" x2="62" y2="62" />
+                          <line x1="108" y1="108" x2="112" y2="112" />
+                          <line x1="112" y1="58" x2="108" y2="62" />
+                          <line x1="62" y1="108" x2="58" y2="112" />
+                        </g>
+                        <circle cx="85" cy="85" r="26" fill="url(#gear-blue)" />
+                        <circle cx="85" cy="85" r="14" fill="#ffffff" />
+                        <g stroke="#ffffff" stroke-width="2.5" stroke-linecap="round">
+                          <line x1="85" y1="67" x2="85" y2="103"/>
+                          <line x1="67" y1="85" x2="103" y2="85"/>
+                        </g>
+                        <circle cx="85" cy="85" r="8" fill="#1e293b"/>
+                        <circle cx="85" cy="85" r="4" fill="#ffffff"/>
+                      </g>
+                      <g class="animate-spin-reverse" style="transform-origin: 130px 130px;">
+                        <circle cx="130" cy="130" r="18" fill="none" stroke="url(#gear-gray)" stroke-width="6"/>
+                        <g stroke="url(#gear-gray)" stroke-width="6" stroke-linecap="round">
+                          <line x1="130" y1="106" x2="130" y2="110"/>
+                          <line x1="130" y1="150" x2="130" y2="154"/>
+                          <line x1="106" y1="130" x2="110" y2="130"/>
+                          <line x1="150" y1="130" x2="154" y2="130"/>
+                          <line x1="113" y1="113" x2="116" y2="116"/>
+                          <line x1="144" y1="144" x2="147" y2="147"/>
+                          <line x1="147" y1="113" x2="144" y2="116"/>
+                          <line x1="116" y1="144" x2="113" y2="147"/>
+                        </g>
+                        <circle cx="130" cy="130" r="15" fill="url(#gear-gray)"/>
+                        <circle cx="130" cy="130" r="6" fill="#ffffff"/>
+                        <circle cx="130" cy="130" r="3" fill="#334155"/>
+                      </g>
+                      <g opacity="0.4" stroke="#3b82f6" stroke-width="0.75">
+                        <path d="M25 45 L50 45 L65 60" fill="none"/>
+                        <circle cx="25" cy="45" r="2" fill="#3b82f6"/>
+                        <text x="25" y="38" fill="#3b82f6" font-size="7" font-family="monospace">REF: SYS_MNT_503</text>
+                        <path d="M175 155 L150 155 L135 140" fill="none"/>
+                        <circle cx="175" cy="155" r="2" fill="#3b82f6"/>
+                        <text x="145" y="165" fill="#3b82f6" font-size="7" font-family="monospace">STATUS: BUSY</text>
+                      </g>
+                    </svg>
+      `;
+      errorDetails = `
+        <div class="system-error-view">
+          <div class="alert-block alert-info">
+            <span class="alert-icon">⏳</span>
+            <div>
+              <h4 class="alert-heading">خطأ 503: الخدمة غير متوفرة</h4>
+              <p class="alert-subheading">Service Temporarily Offline</p>
+            </div>
+          </div>
+
+          <h2 class="error-title">بوابة المزامنة تحت الصيانة الدورية</h2>
+          <p class="error-desc">
+            الخوادم التابعة لنظام <strong>${brandName}</strong> متوقفة مؤقتاً لتثبيت التحديثات الأمنية المقررة. سيقوم النظام بمحاولة إعادة الاتصال التلقائي بالبوابة فور اكتمال أعمال الترقية.
+          </p>
+
+          <div class="countdown-card">
+            <div class="countdown-header">
+              <span class="pulsing-dot"></span>
+              <span id="countdown-text">إعادة محاولة الاتصال التلقائي خلال <span id="timer-val">15</span> ثانية...</span>
+            </div>
+            <div class="progress-track">
+              <div id="progress-bar" class="progress-fill" style="width: 100%"></div>
+            </div>
+          </div>
+
+          <div class="error-actions">
+            <button id="btn-retry-now" class="btn-primary" style="width: 100%;">حاول الاتصال الفوري الآن</button>
+            <button onclick="window.location.href='login.html'" class="btn-secondary" style="width: 100%; margin-top: 10px;">الرجوع لبوابة تسجيل الدخول</button>
+          </div>
+        </div>
+      `;
+    }
+
+    return `<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${pageTitle} | ${brandName} ERP</title>
+  <!-- Google Fonts: Inter & Cairo for Arabic -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="erp-error-body ${isGlass ? 'glassmorphic-bg' : ''}">
+
+  <main class="erp-error-wrapper animate-fade-in">
+    <div class="erp-error-container">
+      <!-- Illustration Column -->
+      <div class="error-illustration-box">
+        ${bigSvg}
+      </div>
+
+      <!-- Info Column -->
+      <div class="error-info-box">
+        <header id="erp-login-header" style="margin-bottom: 1.5rem; text-align: right;">
+          <div id="erp-login-brand">
+            <div class="brand-logo-grid">
+              <div class="logo-square-1"></div>
+              <div class="logo-square-2"></div>
+              <div class="logo-square-3"></div>
+              <div class="logo-square-4"></div>
+            </div>
+            <span class="brand-name">${brandName.toUpperCase()}</span>
+          </div>
+        </header>
+
+        ${errorDetails}
+      </div>
+    </div>
+  </main>
+
+  <!-- Interactive Demo Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      ${scriptContent}
+    });
+  </script>
+</body>
+</html>`;
+  }
+
   return `<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -1136,9 +1519,76 @@ body.erp-login-body {
 }
 
 // --- SYSTEM ERROR STYLES ---
+.erp-error-body {
+  background-color: #f8fafc;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cairo', 'Inter', sans-serif;
+
+  &.glassmorphic-bg {
+    background: radial-gradient(circle at 10% 20%, rgba(239, 246, 255, 0.4) 0%, rgba(219, 234, 254, 0.2) 90%),
+                radial-gradient(circle at 90% 80%, rgba(244, 243, 255, 0.4) 0%, rgba(237, 233, 254, 0.2) 90%);
+    background-size: cover;
+  }
+}
+
+.erp-error-wrapper {
+  width: 100%;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.erp-error-container {
+  background-color: #ffffff;
+  border: 2px solid #0f172a;
+  box-shadow: 4px 4px 0px 0px rgba(15, 23, 42, 1);
+  width: 100%;
+  max-width: 850px;
+  padding: 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+    padding: 3.5rem;
+    gap: 3.5rem;
+  }
+}
+
+.error-illustration-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  .error-illustration {
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+
+    @media (min-width: 768px) {
+      max-width: 280px;
+    }
+  }
+}
+
+.error-info-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .system-error-view {
   text-align: right;
-  margin-top: 1.5rem;
 
   .alert-block {
     display: flex;
@@ -1297,6 +1747,7 @@ body.erp-login-body {
   }
 }
 
+// --- ANIMATION KEYFRAMES ---
 @keyframes pulse-dot {
   0% { transform: scale(0.9); opacity: 0.6; }
   50% { transform: scale(1.15); opacity: 1; }
@@ -1306,6 +1757,44 @@ body.erp-login-body {
 @keyframes bar-pulse {
   from { opacity: 0.6; }
   to { opacity: 1; }
+}
+
+@keyframes spin-slow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes spin-reverse {
+  0% { transform: rotate(360deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes float-horizontal {
+  0% { transform: translateX(0px); }
+  50% { transform: translateX(6px); }
+  100% { transform: translateX(0px); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+
+.animate-spin-reverse {
+  animation: spin-reverse 8s linear infinite;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-float-horizontal {
+  animation: float-horizontal 3.5s ease-in-out infinite;
 }
 `;
 }

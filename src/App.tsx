@@ -73,10 +73,10 @@ export default function App() {
   };
 
   return (
-    <div id="erp-login-designer-root" className="w-screen h-screen flex flex-col lg:flex-row overflow-hidden bg-slate-950 font-sans antialiased">
+    <div id="erp-login-designer-root" className="w-full min-h-screen lg:w-screen lg:h-screen flex flex-col lg:flex-row lg:overflow-hidden bg-slate-950 font-sans antialiased">
       
       {/* LEFT SIDEBAR PANEL: Dual Tabs (Customize Control Panel vs. Code Exporter) */}
-      <aside className="w-full lg:w-[420px] xl:w-[460px] shrink-0 flex flex-col bg-slate-900 border-r border-slate-800 z-30">
+      <aside className="w-full lg:w-[420px] xl:w-[460px] h-[520px] lg:h-full shrink-0 flex flex-col bg-slate-900 border-b lg:border-b-0 lg:border-r border-slate-800 z-30">
         
         {/* Navigation/Sidebar Tabs */}
         <div className="flex border-b border-slate-800 bg-slate-950/40 p-2 shrink-0 gap-1">
@@ -123,7 +123,7 @@ export default function App() {
       </aside>
 
       {/* RIGHT PREVIEW CANVAS: Dynamic Live Preview Simulator */}
-      <main className="flex-1 overflow-hidden z-20">
+      <main className="flex-1 h-[600px] sm:h-[750px] lg:h-full lg:overflow-hidden z-20">
         <PreviewPane 
           config={config} 
           heroImageUrl={HERO_IMAGE_URL} 
