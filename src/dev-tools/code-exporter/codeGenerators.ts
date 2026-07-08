@@ -229,12 +229,11 @@ export function generateHTML(config: LoginConfig, heroImageUrl: string = ''): st
 
           <h2 class="error-title">تم حظر الوصول إلى هذه البوابة</h2>
           <p class="error-desc">
-            لقد تم رفض طلب الاتصال الخاص بك بناءً على سياسات جدار الحماية والأمن السيبراني لشركة <strong>${brandName}</strong>. عنوان IP الخاص بك غير مدرج في القائمة البيضاء أو تم حظره لدواعي أمنية.
+            لقد تم رفض طلب الاتصال الخاص بك بناءً على سياسات جدار الحماية والأمن السيبراني لشركة <strong>${brandName}</strong>. جهازك غير مصرح له بالدخول أو تم حظره لدواعي أمنية.
           </p>
 
           <div class="code-log-box">
-            <div>REASON: ACCESS_CONTROL_VIOLATION</div>
-            <div>REF_ID: SEC-403-IPX9</div>
+            <div>REF_ID: SEC-403-DEV1</div>
           </div>
 
           <div class="error-actions">
@@ -272,7 +271,6 @@ export function generateHTML(config: LoginConfig, heroImageUrl: string = ''): st
           </p>
 
           <div class="code-log-box">
-            <div>ERROR_CODE: ERR_FILE_NOT_FOUND</div>
             <div>REF_ID: ERP-404-NF2</div>
           </div>
 
@@ -310,8 +308,7 @@ export function generateHTML(config: LoginConfig, heroImageUrl: string = ''): st
           </p>
 
           <div class="code-log-box">
-            <div>ERROR_CODE: SRV_500_TIMEOUT</div>
-            <div>REF_ID: SRV-500-ERR_DB_TIMEOUT</div>
+            <div>REF_ID: SRV-500-ERR1</div>
           </div>
 
           <div class="error-actions">
@@ -470,12 +467,11 @@ export function generateHTML(config: LoginConfig, heroImageUrl: string = ''): st
 
           <h2 class="error-title">تم حظر الوصول إلى هذه البوابة</h2>
           <p class="error-desc">
-            لقد تم رفض طلب الاتصال الخاص بك بناءً على سياسات جدار الحماية والأمن السيبراني لشركة <strong>${brandName}</strong>. عنوان IP الخاص بك غير مدرج في القائمة البيضاء أو تم حظره لدواعي أمنية.
+            لقد تم رفض طلب الاتصال الخاص بك بناءً على سياسات جدار الحماية والأمن السيبراني لشركة <strong>${brandName}</strong>. جهازك غير مصرح له بالدخول أو تم حظره لدواعي أمنية.
           </p>
 
           <div class="code-log-box">
-            <div>REASON: ACCESS_CONTROL_VIOLATION</div>
-            <div>REF_ID: SEC-403-IPX9</div>
+            <div>REF_ID: SEC-403-DEV1</div>
           </div>
 
           <div class="error-actions">
@@ -547,7 +543,6 @@ export function generateHTML(config: LoginConfig, heroImageUrl: string = ''): st
           </p>
 
           <div class="code-log-box">
-            <div>ERROR_CODE: ERR_FILE_NOT_FOUND</div>
             <div>REF_ID: ERP-404-NF2</div>
           </div>
 
@@ -629,8 +624,7 @@ export function generateHTML(config: LoginConfig, heroImageUrl: string = ''): st
           </p>
 
           <div class="code-log-box">
-            <div>ERROR_CODE: SRV_500_TIMEOUT</div>
-            <div>REF_ID: SRV-500-ERR_DB_TIMEOUT</div>
+            <div>REF_ID: SRV-500-ERR1</div>
           </div>
 
           <div class="error-actions">

@@ -82,7 +82,16 @@ export default function LoginPage({ config, callbacks, isMobile = false }: Login
       });
 
       if (callbacks?.onLogin) {
-        callbacks.onLogin({ domain, email, password, mfa, remember });
+        // Safe sanitization/masking of sensitive credentials
+        const maskedPassword = password ? '•'.repeat(password.length) : '';
+        const maskedMfa = mfa ? '•'.repeat(mfa.length) : '';
+        callbacks.onLogin({ 
+          domain, 
+          email, 
+          password: maskedPassword, 
+          mfa: maskedMfa, 
+          remember 
+        });
       }
     }, 1200);
   };

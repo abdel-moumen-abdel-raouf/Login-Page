@@ -29,7 +29,8 @@ const DEFAULT_CONFIG: LoginConfig = {
   companyDomainLogin: false,
   customLogoUrl: '',
   pageType: 'login',
-  debugMode: false
+  debugMode: false,
+  devMode: false
 };
 
 // Referencing the generated image from our image generation step
@@ -39,6 +40,13 @@ export default function App() {
   const [config, setConfig] = useState<LoginConfig>(DEFAULT_CONFIG);
   const [sidebarTab, setSidebarTab] = useState<'configure' | 'code'>('configure');
   const [mockError, setMockError] = useState<string | null>(null);
+
+  // Reset tab to configure if developer mode is disabled
+  React.useEffect(() => {
+    if (!config.devMode && sidebarTab === 'code') {
+      setSidebarTab('configure');
+    }
+  }, [config.devMode, sidebarTab]);
 
   const handleReset = () => {
     setConfig(DEFAULT_CONFIG);
@@ -92,17 +100,19 @@ export default function App() {
             <Sliders size={15} />
             <span>Customize Settings</span>
           </button>
-          <button
-            onClick={() => setSidebarTab('code')}
-            className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-semibold tracking-tight transition-all cursor-pointer ${
-              sidebarTab === 'code'
-                ? 'bg-slate-800 text-white'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/40'
-            }`}
-          >
-            <FileCode size={15} />
-            <span>HTML & SCSS Code</span>
-          </button>
+          {config.devMode && (
+            <button
+              onClick={() => setSidebarTab('code')}
+              className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-semibold tracking-tight transition-all cursor-pointer ${
+                sidebarTab === 'code'
+                  ? 'bg-slate-800 text-white'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/40'
+              }`}
+            >
+              <FileCode size={15} />
+              <span>HTML & SCSS Code</span>
+            </button>
+          )}
         </div>
 
         {/* Dynamic Sidebar Content */}

@@ -44,10 +44,13 @@ export default function CodeExporter({ config, heroImageUrl }: CodeExporterProps
         <AlertTriangle className="text-amber-500 shrink-0 mt-0.5" size={16} />
         <div>
           <h4 className="text-[11px] font-bold text-amber-400 uppercase tracking-wider">
-            LEGACY DESIGN EXPORTER — NOT PRODUCTION SOURCE OF TRUTH
+            ⚠️ LEGACY DESIGN EXPORTER — CRITICAL SYSTEM WARNING
           </h4>
           <p className="text-[10px] text-amber-300/85 mt-1 leading-relaxed">
-            The static HTML &amp; SCSS output below is legacy/deprecated and not representative of the production modular React component architecture. Do not use this output for direct ERP integrations.
+            This generated HTML &amp; SCSS output is purely a static template artifact and <strong>MUST NOT</strong> be used for Honesty ERP integration.
+          </p>
+          <p className="text-[10px] text-amber-400 mt-1 font-semibold leading-relaxed">
+            The modular component architecture of this React design sandbox is the sole source of truth for conversion. This output is for legacy/static visual reference only.
           </p>
         </div>
       </div>

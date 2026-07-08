@@ -24,6 +24,7 @@ export interface LoginConfig {
   customLogoUrl: string;
   pageType?: 'login' | 'error403' | 'error404' | 'error500' | 'error503' | string;
   debugMode?: boolean;
+  devMode?: boolean;
 }
 
 export type CodeTab = 'html' | 'scss' | 'both';
