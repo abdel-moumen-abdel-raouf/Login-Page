@@ -129,12 +129,12 @@ To prepare this design sandbox for actual implementation and conversion, keep th
 
 ### 1. Standalone React Architecture vs. Honesty ERP
 This sandbox exists as a **purely client-side design and interactive prototyping playground**. It does not make live network requests or execute persistent state mutations.
-- **Conversion Source of Truth**: The React / Angular modular component architecture in `src/components/` and `src/pages/` is the single source of truth for design patterns, visual guidelines, and interactive flows.
+- **Conversion Source of Truth**: The React / Angular modular component architecture in `src/components/` and `src/pages/` is the sole source of truth for design patterns, visual guidelines, and interactive flows.
 - **State Integration**: During conversion, state variables (such as `domain`, `email`, `password`, and `mfa`) should be bound to the host ERP's secure state management systems (such as Redux, NgRx, or Context Providers) and passed over secure HTTPS REST/GraphQL APIs.
-- **Zero Raw Data Escaping**: As hardened in `LoginPage.tsx`, raw credentials (passwords, MFA tokens) are masked at the component boundaries. Never allow unmasked credentials to escape component states or flow into plain log files.
+- **Zero Raw Data Escaping**: As hardened in `LoginPage.tsx`, login callbacks never emit raw password or MFA credentials to the parent container. The `onLogin` callback transmits only boolean confirmation flags (`domainProvided`, `emailProvided`, `passwordProvided`, `mfaProvided`, `remember`), ensuring 100% security boundary enforcement and zero raw credential leaks.
 
-### 2. Legacy Static Template Exporter (Disabled by Default)
-The workspace includes a legacy Code Exporter tool (`src/dev-tools/code-exporter/`) that compiles configurations into single-file static HTML & SCSS documents.
+### 2. Legacy Static Template Exporter (Disabled by Default & Archived)
+The workspace includes a legacy Code Exporter tool (`src/dev-tools/code-exporter/`) that compiles configurations into single-file static HTML documents.
 - **Strict Prohibition for Production**: This legacy exporter is deprecated, disabled by default, and hidden behind `devMode` (Enable Developer Mode in the Control Panel). It is intended strictly for offline visual styling references.
-- **DO NOT Use for ERP Integration**: The compiled static HTML/SCSS output completely bypasses modularity, lacks security sandboxing, and must **never** be used for direct Honesty ERP integration.
-- **Component Translation**: Production deployment must utilize the structured, typed, and modular React component structure (or its direct translation to Angular) rather than copying static exported strings.
+- **DO NOT Use for ERP Integration**: The compiled static HTML output completely bypasses modularity, lacks security sandboxing, has SCSS generation completely stripped, and must **never** be used for direct Honesty ERP integration.
+- **Component Translation**: Production deployment must utilize the structured, typed, and modular React component structure. Any future Honesty ERP conversion must rebuild this layout into native Angular ERP components, rather than copying legacy static generated SCSS or HTML files.

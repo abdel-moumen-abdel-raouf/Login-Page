@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { LoginConfig } from '../../types';
-import { generateHTML, generateSCSS } from './codeGenerators';
+import { generateHTML } from './codeGenerators';
 import { Copy, Check, Download, FileCode, Cpu, Lightbulb, AlertTriangle } from 'lucide-react';
 
 interface CodeExporterProps {
@@ -9,27 +9,22 @@ interface CodeExporterProps {
 }
 
 export default function CodeExporter({ config, heroImageUrl }: CodeExporterProps) {
-  const [activeTab, setActiveTab] = useState<'html' | 'scss'>('html');
   const [copied, setCopied] = useState(false);
 
   const htmlCode = generateHTML(config, heroImageUrl);
-  const scssCode = generateSCSS(config, heroImageUrl);
 
   const handleCopy = () => {
-    const codeToCopy = activeTab === 'html' ? htmlCode : scssCode;
-    navigator.clipboard.writeText(codeToCopy);
+    navigator.clipboard.writeText(htmlCode);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   const downloadFile = () => {
-    const code = activeTab === 'html' ? htmlCode : scssCode;
-    const filename = activeTab === 'html' ? 'login.html' : 'style.scss';
-    const blob = new Blob([code], { type: 'text/plain;charset=utf-8' });
+    const blob = new Blob([htmlCode], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = filename;
+    link.download = 'login.html';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -47,7 +42,7 @@ export default function CodeExporter({ config, heroImageUrl }: CodeExporterProps
             ⚠️ LEGACY DESIGN EXPORTER — CRITICAL SYSTEM WARNING
           </h4>
           <p className="text-[10px] text-amber-300/85 mt-1 leading-relaxed">
-            This generated HTML &amp; SCSS output is purely a static template artifact and <strong>MUST NOT</strong> be used for Honesty ERP integration.
+            This generated HTML output is purely a static template artifact and <strong>MUST NOT</strong> be used for Honesty ERP integration.
           </p>
           <p className="text-[10px] text-amber-400 mt-1 font-semibold leading-relaxed">
             The modular component architecture of this React design sandbox is the sole source of truth for conversion. This output is for legacy/static visual reference only.
@@ -55,9 +50,9 @@ export default function CodeExporter({ config, heroImageUrl }: CodeExporterProps
         </div>
       </div>
 
-      {/* Exporter Header & Tab Selectors */}
+      {/* Exporter Header */}
       <div className="p-6 border-b border-slate-800 bg-slate-900 shrink-0">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="p-1.5 bg-amber-500/10 text-amber-400 rounded-lg">
               <FileCode size={18} />
@@ -85,59 +80,38 @@ export default function CodeExporter({ config, heroImageUrl }: CodeExporterProps
             </button>
           </div>
         </div>
-
-        {/* Tab Selectors */}
-        <div className="flex bg-slate-950/60 border border-slate-850 p-1 rounded-xl">
-          <button 
-            onClick={() => { setActiveTab('html'); setCopied(false); }}
-            className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
-              activeTab === 'html' ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            login.html
-          </button>
-
-          <button 
-            onClick={() => { setActiveTab('scss'); setCopied(false); }}
-            className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
-              activeTab === 'scss' ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            style.scss
-          </button>
-        </div>
       </div>
 
       {/* Code Text Area (Read-only scrollable panel) */}
       <div className="flex-1 overflow-auto p-6 font-mono text-xs text-slate-300 leading-relaxed bg-slate-950">
         <pre className="whitespace-pre select-all selection:bg-indigo-500/30">
-          {activeTab === 'html' ? htmlCode : scssCode}
+          {htmlCode}
         </pre>
       </div>
 
       {/* Guide Tips / Implementation Guidelines */}
       <div className="p-6 border-t border-slate-800 bg-slate-900/50 space-y-4 shrink-0">
         <h4 className="text-xs font-bold text-slate-200 flex items-center gap-1.5 uppercase tracking-wider">
-          <Lightbulb size={14} className="text-yellow-400" /> Implementation Guidelines
+          <Lightbulb size={14} className="text-yellow-400" /> Integration Guidelines
         </h4>
         
         <div className="space-y-2.5 text-[11px] text-slate-400 leading-relaxed">
           <div className="flex gap-2">
-            <span className="text-indigo-400 font-bold">1.</span>
+            <span className="text-amber-500 font-bold">1.</span>
             <p>
-              <strong>Sass Compilation</strong>: Place <code className="text-indigo-300 font-mono">style.scss</code> inside your styles directory and compile it to <code className="text-indigo-300 font-mono">style.css</code> via Webpack, Vite, or the CLI (<code className="bg-slate-950 px-1 py-0.5 rounded text-indigo-300 font-mono">sass style.scss style.css</code>).
+              <strong>Pure Design Blueprint</strong>: The generated HTML above serves strictly as a static layout blueprint. Do not deploy this static template to Honesty ERP.
             </p>
           </div>
           <div className="flex gap-2">
             <span className="text-indigo-400 font-bold">2.</span>
             <p>
-              <strong>Responsive Behavior</strong>: The split side-panel automatically collapses cleanly on mobile viewports (<code className="text-indigo-300 font-mono">max-width: 1024px</code>) using CSS Flexbox/Grid media queries.
+              <strong>Modular React Core</strong>: Use the structured, typed, and fully interactive React components in <code className="text-indigo-300 font-mono">src/components/</code> and <code className="text-indigo-300 font-mono">src/pages/</code> as the sole implementation path.
             </p>
           </div>
           <div className="flex gap-2">
             <span className="text-indigo-400 font-bold">3.</span>
             <p>
-              <strong>Accessibility (a11y)</strong>: Fully loaded with semantic HTML elements, strict labels matching input IDs, and responsive ARIA properties for security tokens.
+              <strong>Angular ERP Translation</strong>: For final production conversion, rebuild these layouts into modular Angular components using native Angular directives rather than importing global legacy SCSS files.
             </p>
           </div>
         </div>

@@ -117,7 +117,7 @@ export default function App() {
 
         {/* Dynamic Sidebar Content */}
         <div className="flex-1 overflow-hidden">
-          {sidebarTab === 'configure' ? (
+          {sidebarTab === 'configure' || !config.devMode ? (
             <ControlPanel 
               config={config} 
               onChange={setConfig} 

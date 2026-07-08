@@ -37,8 +37,16 @@ export interface AuthPageConfig {
   customLabel2?: string;
 }
 
+export interface AuthLoginAttempt {
+  domainProvided: boolean;
+  emailProvided: boolean;
+  passwordProvided: boolean;
+  mfaProvided: boolean;
+  remember: boolean;
+}
+
 export interface AuthPageCallbacks {
-  onLogin?: (data: any) => void;
+  onLogin?: (data: AuthLoginAttempt) => void;
   onForgotPassword?: (email: string) => void;
   onResetPassword?: (data: any) => void;
   onVerifyMfa?: (token: string) => void;

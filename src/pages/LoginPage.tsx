@@ -82,14 +82,12 @@ export default function LoginPage({ config, callbacks, isMobile = false }: Login
       });
 
       if (callbacks?.onLogin) {
-        // Safe sanitization/masking of sensitive credentials
-        const maskedPassword = password ? '•'.repeat(password.length) : '';
-        const maskedMfa = mfa ? '•'.repeat(mfa.length) : '';
+        // Zero-leakage: do not emit raw password/MFA outside LoginPage
         callbacks.onLogin({ 
-          domain, 
-          email, 
-          password: maskedPassword, 
-          mfa: maskedMfa, 
+          domainProvided: Boolean(domain), 
+          emailProvided: Boolean(email), 
+          passwordProvided: Boolean(password), 
+          mfaProvided: Boolean(mfa), 
           remember 
         });
       }

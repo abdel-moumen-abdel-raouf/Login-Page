@@ -298,13 +298,13 @@ export function generateHTML(config: LoginConfig, heroImageUrl: string = ''): st
             <span class="alert-icon">💥</span>
             <div>
               <h4 class="alert-heading">خطأ 500: خلل داخلي</h4>
-              <p class="alert-subheading">Internal Database Server Error</p>
+              <p class="alert-subheading">Internal Connection Timeout</p>
             </div>
           </div>
 
           <h2 class="error-title">فشل غير متوقع في جلب البيانات</h2>
           <p class="error-desc">
-            حدث خطأ غير متوقع في قاعدة البيانات الرئيسية لنظام <strong>${brandName}</strong> أثناء معالجة استعلام المصادقة. تم إرسال تنبيه بالحدث تلقائياً لمهندسي الدعم الفني.
+            حدث خطأ غير متوقع أثناء الاتصال بالخادم الرئيسي لنظام <strong>${brandName}</strong>. تم إرسال تنبيه بالحدث تلقائياً لفرق الدعم الفني.
           </p>
 
           <div class="code-log-box">
@@ -614,13 +614,13 @@ export function generateHTML(config: LoginConfig, heroImageUrl: string = ''): st
             <span class="alert-icon">💥</span>
             <div>
               <h4 class="alert-heading">خطأ 500: خلل داخلي</h4>
-              <p class="alert-subheading">Internal Database Server Error</p>
+              <p class="alert-subheading">Internal Connection Timeout</p>
             </div>
           </div>
 
           <h2 class="error-title">فشل غير متوقع في جلب البيانات</h2>
           <p class="error-desc">
-            حدث خطأ غير متوقع في قاعدة البيانات الرئيسية لنظام <strong>${brandName}</strong> أثناء معالجة استعلام المصادقة. تم إرسال تنبيه بالحدث تلقائياً لمهندسي الدعم الفني.
+            حدث خطأ غير متوقع أثناء الاتصال بالخادم الرئيسي لنظام <strong>${brandName}</strong>. تم إرسال تنبيه بالحدث تلقائياً لفرق الدعم الفني.
           </p>
 
           <div class="code-log-box">

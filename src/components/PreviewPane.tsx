@@ -25,6 +25,7 @@ import NetworkOfflinePage from '../pages/NetworkOfflinePage';
 import { getAuthPageConfig } from '../config/auth-page.config';
 import { getErrorPageConfig } from '../config/error-page.config';
 import { LayoutStyle } from '../types/design.types';
+import { AuthLoginAttempt } from '../types/auth.types';
 
 // Icons for the viewport simulator
 import { Laptop, Smartphone, LayoutGrid, RotateCcw } from 'lucide-react';
@@ -143,7 +144,7 @@ export default function PreviewPane({ config, heroImageUrl, mockError, onClearEr
 
   // Safe action callbacks that bypass browser alert() dialogs, outputting inline state instead
   const authCallbacks = {
-    onLogin: (data: any) => {
+    onLogin: (data: AuthLoginAttempt) => {
       // No sensitive logging - authentication handled securely in sandbox
     },
     onForgotPassword: (email: string) => {
