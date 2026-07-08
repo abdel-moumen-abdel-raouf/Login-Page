@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { LoginConfig } from './types';
 import ControlPanel from './components/ControlPanel';
 import PreviewPane from './components/PreviewPane';
-import CodeExporter from './components/CodeExporter';
+import CodeExporter from './dev-tools/code-exporter/CodeExporter';
 import { 
   Sliders, 
   FileCode, 
@@ -28,7 +28,8 @@ const DEFAULT_CONFIG: LoginConfig = {
   requireMFA: false,
   companyDomainLogin: false,
   customLogoUrl: '',
-  pageType: 'login'
+  pageType: 'login',
+  debugMode: false
 };
 
 // Referencing the generated image from our image generation step

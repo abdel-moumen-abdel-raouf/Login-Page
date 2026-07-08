@@ -25,6 +25,7 @@ export interface ErrorPageConfig {
   brandName?: string;
   technicalPayload?: Record<string, string>;
   supportContact?: string;
+  debugMode?: boolean;
 }
 
 export interface ErrorPageCallbacks {

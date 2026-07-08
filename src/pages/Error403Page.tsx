@@ -61,6 +61,7 @@ export default function Error403Page({ config, callbacks, isMobile = false }: Er
             statusCode={config.statusCode}
             safeDetails={config.safeDetails || config.message}
             debugFields={config.technicalPayload}
+            debugMode={config.debugMode}
           />
 
           <ErrorActionGroup 

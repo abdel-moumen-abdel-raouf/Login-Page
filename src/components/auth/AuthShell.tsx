@@ -29,7 +29,7 @@ export default function AuthShell({
 
   return (
     <div 
-      className={`flex-1 overflow-y-auto bg-slate-50 text-slate-900 flex ${
+      className={`erp-auth-scope flex-1 overflow-y-auto bg-slate-50 text-slate-900 flex ${
         isSplit ? 'flex-row h-full' : 'flex-col items-center justify-center p-4 sm:p-6 bg-slate-100/50'
       } ${isGlass ? 'glassmorphic-screen-bg' : ''}`}
       dir="rtl"

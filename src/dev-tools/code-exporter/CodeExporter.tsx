@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { LoginConfig } from '../types';
-import { generateHTML, generateSCSS } from '../utils/codeGenerators';
-import { Copy, Check, Download, FileCode, Cpu, Lightbulb } from 'lucide-react';
+import { LoginConfig } from '../../types';
+import { generateHTML, generateSCSS } from './codeGenerators';
+import { Copy, Check, Download, FileCode, Cpu, Lightbulb, AlertTriangle } from 'lucide-react';
 
 interface CodeExporterProps {
   config: LoginConfig;
@@ -39,14 +39,27 @@ export default function CodeExporter({ config, heroImageUrl }: CodeExporterProps
   return (
     <div id="code-exporter" className="h-full bg-slate-950 border-t lg:border-t-0 lg:border-l border-slate-800 flex flex-col overflow-hidden">
       
+      {/* Deprecation Warning Banner */}
+      <div className="bg-amber-950/40 border-b border-amber-900/40 p-4 flex gap-3 items-start select-none">
+        <AlertTriangle className="text-amber-500 shrink-0 mt-0.5" size={16} />
+        <div>
+          <h4 className="text-[11px] font-bold text-amber-400 uppercase tracking-wider">
+            LEGACY DESIGN EXPORTER — NOT PRODUCTION SOURCE OF TRUTH
+          </h4>
+          <p className="text-[10px] text-amber-300/85 mt-1 leading-relaxed">
+            The static HTML &amp; SCSS output below is legacy/deprecated and not representative of the production modular React component architecture. Do not use this output for direct ERP integrations.
+          </p>
+        </div>
+      </div>
+
       {/* Exporter Header & Tab Selectors */}
       <div className="p-6 border-b border-slate-800 bg-slate-900 shrink-0">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <div className="p-1.5 bg-indigo-500/10 text-indigo-400 rounded-lg">
+            <div className="p-1.5 bg-amber-500/10 text-amber-400 rounded-lg">
               <FileCode size={18} />
             </div>
-            <h2 className="font-bold text-sm text-white tracking-tight">Source Code Exporter</h2>
+            <h2 className="font-bold text-sm text-white tracking-tight">Source Code Exporter <span className="text-[10px] text-amber-500 ml-1.5 font-normal uppercase tracking-wider border border-amber-900/40 px-1.5 py-0.5 rounded bg-amber-950/20">(Legacy)</span></h2>
           </div>
           <div className="flex items-center gap-2">
             <button 

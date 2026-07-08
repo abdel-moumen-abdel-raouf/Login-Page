@@ -11,13 +11,15 @@ interface ErrorReferenceCodeProps {
   statusCode?: string;
   safeDetails?: string;
   debugFields?: Record<string, string>; // Unsafe details kept under "Developer Tools" toggle only
+  debugMode?: boolean; // Controls whether the simulation-only debug panel is visible
 }
 
 export default function ErrorReferenceCode({
   referenceCode,
   statusCode = '500',
   safeDetails,
-  debugFields
+  debugFields,
+  debugMode = false
 }: ErrorReferenceCodeProps) {
   const [showDebug, setShowDebug] = useState(false);
 
@@ -42,7 +44,7 @@ export default function ErrorReferenceCode({
       </div>
 
       {/* 3. Restricted/Expandable Developer-Only Panel (Isolated Debug Sandbox) */}
-      {debugFields && Object.keys(debugFields).length > 0 && (
+      {debugMode && debugFields && Object.keys(debugFields).length > 0 && (
         <div className="border border-slate-200">
           <button
             type="button"
@@ -51,18 +53,18 @@ export default function ErrorReferenceCode({
           >
             <div className="flex items-center gap-1.5 font-mono">
               <Terminal size={12} className="text-slate-500" />
-              <span>لوحة المحاكاة والتطوير (مغلقة للمستخدمين)</span>
+              <span>لوحة محاكاة التطوير والتحليل الفني (أغراض المحاكاة فقط)</span>
             </div>
             {showDebug ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
           </button>
 
           {showDebug && (
             <div 
-              className="p-4 bg-slate-950 font-mono text-[10px] text-cyan-400 space-y-1 text-left select-text" 
+               className="p-4 bg-slate-950 font-mono text-[10px] text-cyan-400 space-y-1 text-left select-text" 
               dir="ltr"
             >
-              <div className="text-[9px] text-amber-400/80 border-b border-cyan-500/20 pb-1.5 mb-2 font-sans text-right" dir="rtl">
-                ⚠️ هذه البيانات الفنية مخفية في الإنتاج الحقيقي وتظهر هنا لأغراض محاكاة صندوق التصميم فقط.
+              <div className="text-[9px] text-amber-400/90 border-b border-cyan-500/20 pb-1.5 mb-2 font-sans text-right font-semibold" dir="rtl">
+                ⚠️ [بيئة محاكاة التصميم] هذه البيانات الفنية التفصيلية مخفية تماماً في إنتاج ERP الفعلي للحفاظ على الأمان السيبراني.
               </div>
               {Object.entries(debugFields).map(([key, val]) => (
                 <div key={key}>

@@ -83,6 +83,7 @@ export default function Error503Page({ config, callbacks, isMobile = false }: Er
             statusCode={config.statusCode}
             safeDetails={config.safeDetails || config.message}
             debugFields={config.technicalPayload}
+            debugMode={config.debugMode}
           />
 
           <ErrorActionGroup 

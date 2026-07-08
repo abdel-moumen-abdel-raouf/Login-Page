@@ -333,6 +333,24 @@ export default function ControlPanel({ config, onChange, onReset, onTriggerMockE
                 )}
               </button>
             </div>
+
+            {/* Toggle: Debug Mode */}
+            <div className="flex items-center justify-between p-3 bg-slate-950/60 border border-slate-850 rounded-lg">
+              <div>
+                <span className="block text-xs font-semibold text-slate-200">Simulate Debug Mode</span>
+                <span className="text-[10px] text-slate-400">Reveal simulated developer-only diagnostic panels</span>
+              </div>
+              <button 
+                onClick={() => updateField('debugMode', !config.debugMode)}
+                className="text-slate-400 hover:text-white transition-colors cursor-pointer"
+              >
+                {config.debugMode ? (
+                  <ToggleRight size={36} className="text-amber-500" />
+                ) : (
+                  <ToggleLeft size={36} />
+                )}
+              </button>
+            </div>
           </div>
         </div>
 

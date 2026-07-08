@@ -67,6 +67,7 @@ export default function Error500Page({ config, callbacks, isMobile = false }: Er
             statusCode={config.statusCode}
             safeDetails={config.safeDetails || config.message}
             debugFields={config.technicalPayload}
+            debugMode={config.debugMode}
           />
 
           <ErrorActionGroup 

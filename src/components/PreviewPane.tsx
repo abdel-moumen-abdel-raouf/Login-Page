@@ -131,6 +131,7 @@ export default function PreviewPane({ config, heroImageUrl, mockError, onClearEr
       ...baseConfig,
       brandName: config.brandName || baseConfig.brandName,
       primaryColor: config.primaryColor as ThemeColor,
+      debugMode: config.debugMode,
       technicalPayload: {
         ...baseConfig.technicalPayload,
         BRAND: config.brandName,
@@ -143,13 +144,13 @@ export default function PreviewPane({ config, heroImageUrl, mockError, onClearEr
   // Safe action callbacks that bypass browser alert() dialogs, outputting inline state instead
   const authCallbacks = {
     onLogin: (data: any) => {
-      console.log('Secure Authentication Payload:', data);
+      // No sensitive logging - authentication handled securely in sandbox
     },
     onForgotPassword: (email: string) => {
       setActivePageId('forgot_password');
     },
     onVerifyMfa: (code: string) => {
-      console.log('MFA Verification Code Checked:', code);
+      // No sensitive logging - code verified securely in sandbox
     },
     onResetPassword: (data: any) => {
       setActivePageId('login');

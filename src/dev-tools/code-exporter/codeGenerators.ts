@@ -1,4 +1,4 @@
-import { LoginConfig } from '../types';
+import { LoginConfig } from '../../types';
 
 export const COLOR_PALETTES = {
   blue: { primary: '#2563eb', primaryHover: '#1d4ed8', primaryLight: '#eff6ff', accent: '#3b82f6' },
@@ -195,7 +195,7 @@ export function generateHTML(config: LoginConfig, heroImageUrl: string = ''): st
               submitBtn.classList.remove('loading');
               submitBtn.classList.add('success');
               submitBtn.textContent = 'تم الاتصال بنجاح';
-              alert('محاكاة تسجيل الدخول نجحت! تم تسليم النموذج بأمان لمسؤولي النظام.');
+              console.log('محاكاة تسجيل الدخول نجحت! تم تسليم النموذج بأمان لمسؤولي النظام.');
               submitBtn.disabled = false;
               submitBtn.textContent = originalText;
               submitBtn.classList.remove('success');
@@ -233,14 +233,13 @@ export function generateHTML(config: LoginConfig, heroImageUrl: string = ''): st
           </p>
 
           <div class="code-log-box">
-            <div>SENDER_IP: 197.34.112.90</div>
             <div>REASON: ACCESS_CONTROL_VIOLATION</div>
-            <div>NODE: GATEWAY_EMEA_01</div>
+            <div>REF_ID: SEC-403-IPX9</div>
           </div>
 
           <div class="error-actions">
             <button onclick="window.location.reload()" class="btn-primary" style="width: 100%;">إعادة محاولة الاتصال</button>
-            <button onclick="alert('تم تقديم طلب الفك لمراجعة الأمان.')" class="btn-secondary" style="width: 100%; margin-top: 10px;">طلب فك الحظر الفني</button>
+            <button onclick="console.log('تم تقديم طلب الفك لمراجعة الأمان.')" class="btn-secondary" style="width: 100%; margin-top: 10px;">طلب فك الحظر الفني</button>
           </div>
         </div>
     `;
@@ -273,12 +272,12 @@ export function generateHTML(config: LoginConfig, heroImageUrl: string = ''): st
           </p>
 
           <div class="code-log-box">
-            <div>REQUEST_URI: /modules/admin/dashboard.jsp</div>
             <div>ERROR_CODE: ERR_FILE_NOT_FOUND</div>
+            <div>REF_ID: ERP-404-NF2</div>
           </div>
 
           <div class="error-actions">
-            <button onclick="alert('جاري التوجيه للرئيسية...')" class="btn-primary" style="width: 100%;">العودة للرئيسية والتسجيل</button>
+            <button onclick="console.log('جاري التوجيه للرئيسية...')" class="btn-primary" style="width: 100%;">العودة للرئيسية والتسجيل</button>
           </div>
         </div>
     `;
@@ -311,9 +310,8 @@ export function generateHTML(config: LoginConfig, heroImageUrl: string = ''): st
           </p>
 
           <div class="code-log-box">
-            <div>EXCEPTION: NullPointerException</div>
-            <div>SOURCE: database_pool_connector.rs:240</div>
-            <div>STATUS: SQL_DATABASE_UNREACHABLE</div>
+            <div>ERROR_CODE: SRV_500_TIMEOUT</div>
+            <div>REF_ID: SRV-500-ERR_DB_TIMEOUT</div>
           </div>
 
           <div class="error-actions">
@@ -404,7 +402,7 @@ export function generateHTML(config: LoginConfig, heroImageUrl: string = ''): st
             progressBar.classList.remove('loading-pulse');
             progressBar.style.width = '100%';
             if (retryBtn) retryBtn.disabled = false;
-            alert('فشلت محاولة الاتصال التلقائي بالخادم الرئيسي (خطأ 503). سيعيد النظام المحاولة مجدداً بعد انتهاء العداد.');
+            console.log('فشلت محاولة الاتصال التلقائي بالخادم الرئيسي (خطأ 503). سيعيد النظام المحاولة مجدداً بعد انتهاء العداد.');
           }, 2000);
         };
 
@@ -476,14 +474,13 @@ export function generateHTML(config: LoginConfig, heroImageUrl: string = ''): st
           </p>
 
           <div class="code-log-box">
-            <div>SENDER_IP: 197.34.112.90</div>
             <div>REASON: ACCESS_CONTROL_VIOLATION</div>
-            <div>NODE: GATEWAY_EMEA_01</div>
+            <div>REF_ID: SEC-403-IPX9</div>
           </div>
 
           <div class="error-actions">
             <button onclick="window.location.href='login.html'" class="btn-primary" style="width: 100%;">العودة لبوابة تسجيل الدخول</button>
-            <button onclick="alert('تم تقديم طلب فك الحظر الفني.')" class="btn-secondary" style="width: 100%; margin-top: 10px;">طلب فك الحظر الفني</button>
+            <button onclick="console.log('تم تقديم طلب فك الحظر الفني.')" class="btn-secondary" style="width: 100%; margin-top: 10px;">طلب فك الحظر الفني</button>
           </div>
         </div>
       `;
@@ -550,9 +547,8 @@ export function generateHTML(config: LoginConfig, heroImageUrl: string = ''): st
           </p>
 
           <div class="code-log-box">
-            <div>REQUEST_URI: /modules/admin/dashboard.jsp</div>
             <div>ERROR_CODE: ERR_FILE_NOT_FOUND</div>
-            <div>MODULE: ADMIN_CORE_STATION</div>
+            <div>REF_ID: ERP-404-NF2</div>
           </div>
 
           <div class="error-actions">
@@ -633,9 +629,8 @@ export function generateHTML(config: LoginConfig, heroImageUrl: string = ''): st
           </p>
 
           <div class="code-log-box">
-            <div>EXCEPTION: NullPointerException</div>
-            <div>SOURCE: database_pool_connector.rs:240</div>
-            <div>STATUS: SQL_DATABASE_UNREACHABLE</div>
+            <div>ERROR_CODE: SRV_500_TIMEOUT</div>
+            <div>REF_ID: SRV-500-ERR_DB_TIMEOUT</div>
           </div>
 
           <div class="error-actions">
@@ -712,7 +707,7 @@ export function generateHTML(config: LoginConfig, heroImageUrl: string = ''): st
                         <text x="25" y="38" fill="#3b82f6" font-size="7" font-family="monospace">REF: SYS_MNT_503</text>
                         <path d="M175 155 L150 155 L135 140" fill="none"/>
                         <circle cx="175" cy="155" r="2" fill="#3b82f6"/>
-                        <text x="145" y="165" fill="#3b82f6" font-size="7" font-family="monospace">STATUS: BUSY</text>
+                        <text x="145" y="165" fill="#3b82f6" font-size="7" font-family="monospace">SYSTEM: BUSY</text>
                       </g>
                     </svg>
       `;
