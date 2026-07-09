@@ -42,7 +42,7 @@ export default function MfaChallengePage({ config, callbacks, isMobile = false }
         tone: 'success'
       });
       if (callbacks?.onVerifyMfa) {
-        callbacks.onVerifyMfa(token);
+        callbacks.onVerifyMfa({ tokenProvided: Boolean(token) });
       }
     }, 1500);
   };

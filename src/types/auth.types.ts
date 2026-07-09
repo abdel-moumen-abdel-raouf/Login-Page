@@ -45,12 +45,22 @@ export interface AuthLoginAttempt {
   remember: boolean;
 }
 
+export interface AuthResetPasswordAttempt {
+  tokenProvided?: boolean;
+  currentPasswordProvided?: boolean;
+  passwordProvided: boolean;
+}
+
+export interface AuthMfaVerifyAttempt {
+  tokenProvided: boolean;
+}
+
 export interface AuthPageCallbacks {
   onLogin?: (data: AuthLoginAttempt) => void;
   onForgotPassword?: (email: string) => void;
-  onResetPassword?: (data: any) => void;
-  onVerifyMfa?: (token: string) => void;
-  onSubmitMfa?: (token: string) => void;
+  onResetPassword?: (data: AuthResetPasswordAttempt) => void;
+  onVerifyMfa?: (data: AuthMfaVerifyAttempt) => void;
+  onSubmitMfa?: (data: AuthMfaVerifyAttempt) => void;
   onSecondaryAction?: () => void;
   onLanguageSwitch?: (lang: string) => void;
 }

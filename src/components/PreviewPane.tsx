@@ -25,7 +25,7 @@ import NetworkOfflinePage from '../pages/NetworkOfflinePage';
 import { getAuthPageConfig } from '../config/auth-page.config';
 import { getErrorPageConfig } from '../config/error-page.config';
 import { LayoutStyle } from '../types/design.types';
-import { AuthLoginAttempt } from '../types/auth.types';
+import { AuthLoginAttempt, AuthMfaVerifyAttempt, AuthResetPasswordAttempt } from '../types/auth.types';
 
 // Icons for the viewport simulator
 import { Laptop, Smartphone, LayoutGrid, RotateCcw } from 'lucide-react';
@@ -150,10 +150,10 @@ export default function PreviewPane({ config, heroImageUrl, mockError, onClearEr
     onForgotPassword: (email: string) => {
       setActivePageId('forgot_password');
     },
-    onVerifyMfa: (code: string) => {
+    onVerifyMfa: (data: AuthMfaVerifyAttempt) => {
       // No sensitive logging - code verified securely in sandbox
     },
-    onResetPassword: (data: any) => {
+    onResetPassword: (data: AuthResetPasswordAttempt) => {
       setActivePageId('login');
     },
     onSecondaryAction: () => {

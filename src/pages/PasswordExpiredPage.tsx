@@ -57,7 +57,10 @@ export default function PasswordExpiredPage({ config, callbacks, isMobile = fals
         tone: 'success'
       });
       if (callbacks?.onResetPassword) {
-        callbacks.onResetPassword({ token: currentPassword, password: newPassword });
+        callbacks.onResetPassword({ 
+          currentPasswordProvided: Boolean(currentPassword), 
+          passwordProvided: Boolean(newPassword) 
+        });
       }
     }, 1500);
   };

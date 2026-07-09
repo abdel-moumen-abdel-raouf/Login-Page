@@ -54,7 +54,10 @@ export default function ResetPasswordPage({ config, callbacks, isMobile = false 
         tone: 'success'
       });
       if (callbacks?.onResetPassword) {
-        callbacks.onResetPassword({ token, password });
+        callbacks.onResetPassword({ 
+          tokenProvided: Boolean(token), 
+          passwordProvided: Boolean(password) 
+        });
       }
     }, 1500);
   };
